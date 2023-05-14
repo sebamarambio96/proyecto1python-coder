@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+from control_estudios.models import Estudiante, Curso
+
+
 def saludar_con_html(request):
     contexto = {
         "usuario":"Seba"
@@ -13,12 +16,7 @@ def saludar_con_html(request):
 
 def listar_estudiantes(request):
     contexto = {
-        "estudiantes":[
-            {"nombre":"Seba", "apellido":"Marambio"},
-            {"nombre":"cami", "apellido":"Marambio"},
-            {"nombre":"felipe", "apellido":"Marambio"},
-            {"nombre":"Zhinus", "apellido":"Manshadi"},
-            ]
+        "estudiantes":Estudiante.objects.all(),
     }
     http_response = render(
         request=request,
@@ -29,10 +27,7 @@ def listar_estudiantes(request):
 
 def listar_cursos(request):
     contexto = {
-        "cursos":[
-            {"nombre":"Python", "comision":"1234"},
-            {"nombre":"AWS", "comision":"1324234"},
-            ]
+        "cursos": Curso.objects.all(),
     }
     http_response = render(
         request=request,
