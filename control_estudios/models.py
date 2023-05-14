@@ -38,7 +38,7 @@ class Profesor(models.Model):
 
 class Entregable(models.Model):
     nombre = models.CharField(max_length=256)
-    fecha_nacimiento = models.DateTimeField()
+    fecha_entrega = models.DateTimeField()
     aprobado= models.BooleanField(default=False)
 
     def __str__(self):
