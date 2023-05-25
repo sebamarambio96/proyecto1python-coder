@@ -1,18 +1,44 @@
-{% extends 'control_estudios/base.html' %} 
+{% extends 'control_estudios/base.html' %} {%block contenido %}
+<section class="m-3">
+  <div>
+    <h1>Lista de cursos</h1>
 
-{%block contenido %} 
-    <section class="m-3">
-        <div>
-            <h1>Lista de cursos</h1>
+    <form action="{% url 'buscar_cursos' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="busqueda" />
+      <input type="submit" value="Buscar por comisión" />
+    </form>
+    <br />
 
-            <form action="{% url 'buscar_cursos' %}" method="post">
-                {% csrf_token %}
-                <input type='text' name="busqueda">
-                <input type="submit" value="Buscar por comisión">
+    <table class="table w-50">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Comisión</th>
+          <th></th>
+          <th>Eliminar</th>
+        </tr>
+
+        {% for curso in cursos %}
+        <tr>
+          <td>{{curso.id}}</td>
+          <td>{{curso.nombre}}</td>
+          <td>{{curso.comision}}</td>
+          <td>
+            <a href="{% url 'editar_curso' curso.id %}">Editar</a>
+          </td>
+          <td>
+            <form action="{% url 'eliminar_curso' curso.id %}" method="post">
+              {% csrf_token%}
+              <input type="submit" value="Eliminar" />
             </form>
-            <br>
-            <ul>
-                {% for curso in cursos %}
-                    <li>{{curso.nombre}}, {{curso.comision}}</li>
-                {% endfor %}
-{%endblock contenido %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {%endblock contenido %}
+  </div>
+</section>
