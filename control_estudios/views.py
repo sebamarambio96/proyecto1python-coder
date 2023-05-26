@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from control_estudios.models import Estudiante, Curso, Entregable, Profesor
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from control_estudios.forms import (
     CursoFormulario,
     ProfesorFormulario,
@@ -43,14 +46,15 @@ def listar_cursos(request):
     )
     return http_response
 
-
+@login_required
 def crear_cursos(request):
     if request.method == "POST":
         data = request.POST
         nombre = data["nombre"]
         comision = data["comision"]
+        creador = request.user
         """ curso= Curso.objects.create(nombre=nombre, comision=comision) """
-        curso = Curso(nombre=nombre, comision=comision)
+        curso = Curso(nombre=nombre, comision=comision, creador=creador)
         curso.save()
         url_exitosa = reverse("cursos")
         return redirect(url_exitosa)
@@ -229,24 +233,24 @@ def crear_entregable(request):
 
 #Vistas de estudiantes
 
-class EstudianteListView(ListView):
+class EstudianteListView(LoginRequiredMixin, ListView):
     model = Estudiante
     template_name= "control_estudios/listar_estudiantes.html"
     
-class EstudianteDetailView(DetailView):
+class EstudianteDetailView(LoginRequiredMixin, DetailView):
     model = Estudiante
     """ success_url = reverse_lazy('listar_estudiantes') """
     
-class EstudianteUpdateView(UpdateView):
+class EstudianteUpdateView(LoginRequiredMixin, UpdateView):
     model = Estudiante
     fields = ('apellido', 'nombre', 'email', 'dni')
     success_url = reverse_lazy('listar_estudiantes')
     
-class EstudianteDeleteView(DeleteView):
+class EstudianteDeleteView(LoginRequiredMixin, DeleteView):
     model = Estudiante
     success_url = reverse_lazy('listar_estudiantes')
     
-class EstudianteCreateView(CreateView):
+class EstudianteCreateView(LoginRequiredMixin, CreateView):
     model = Estudiante
     fields = ('apellido', 'nombre', 'email', 'dni', 'fecha_nacimiento')
     success_url = reverse_lazy('listar_estudiantes')

@@ -62,6 +62,19 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'crear_estudiante' %}">Crear estudiantes</a>
             </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="btn btn-warning mx-2" href="{% url 'logout' %}">Cerrar Sesión</a>
+            </li>
+            {% else %}
+            
+            <li class="nav-item">
+              <a class="btn btn-info mx-2" href="{% url 'login' %}">Iniciar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-dark mx-2" href="{% url 'registro' %}">Registrarse</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>

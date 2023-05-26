@@ -9,4 +9,5 @@ urlpatterns = [
     path('saludo/', saludar),
     path('saludohtml/', saludar_con_html),
     path('plataforma/',include("control_estudios.urls")),
+    path('perfiles/',include("perfiles.urls")),
 ]
