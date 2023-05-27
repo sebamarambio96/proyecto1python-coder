@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from control_estudios.models import Estudiante, Curso, Entregable, Profesor
+from control_estudios.models import Estudiante, Curso, Entregable, Profesor, Noticias
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
@@ -36,6 +36,7 @@ def saludar_con_html(request):
  """
 
 def listar_cursos(request):
+    print (User)
     contexto = {
         "cursos": Curso.objects.all(),
     }
@@ -47,25 +48,26 @@ def listar_cursos(request):
     return http_response
 
 @login_required
-def crear_cursos(request):
+def crear_noticia(request):
     if request.method == "POST":
         data = request.POST
-        nombre = data["nombre"]
-        comision = data["comision"]
-        creador = request.user
-        """ curso= Curso.objects.create(nombre=nombre, comision=comision) """
-        curso = Curso(nombre=nombre, comision=comision, creador=creador)
-        curso.save()
-        url_exitosa = reverse("cursos")
+        titular = data["titular"]
+        subtitulo = data["subtitulo"]
+        cuerpo = data["cuerpo"]
+        categoria = data["categoria"]
+        portada_img = request.FILES.get("portada_img")
+        autor = request.user
+        noticias = Noticias(titular=titular, subtitulo=subtitulo, cuerpo=cuerpo, categoria=categoria, autor=autor, imagen=portada_img)
+        noticias.save()
+        url_exitosa = reverse("inicio")
         return redirect(url_exitosa)
     else:
         http_response = render(
             request=request,
-            template_name="control_estudios/formulario_curso1.html",
+            template_name="control_estudios/formulario_noticia.html",
         )
         return http_response
-
-
+    
 def buscar_cursos(request):
     if request.method == "POST":
         data = request.POST
@@ -254,3 +256,13 @@ class EstudianteCreateView(LoginRequiredMixin, CreateView):
     model = Estudiante
     fields = ('apellido', 'nombre', 'email', 'dni', 'fecha_nacimiento')
     success_url = reverse_lazy('listar_estudiantes')
+    
+#NOTICIAS
+
+class NoticiasDetailView(LoginRequiredMixin, DetailView):
+    model = Noticias
+    """ success_url = reverse_lazy('listar_estudiantes') """
+    
+class NoticiasListView(LoginRequiredMixin, ListView):
+    model = Noticias
+    template_name= "control_estudios/listar_noticias.html"

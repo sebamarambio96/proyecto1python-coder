@@ -1,0 +1,68 @@
+{% extends 'control_estudios/base.html' %} 
+{%block contenido %}
+
+<form
+  class="vh-100 bg-light d-flex flex-column align-items-center"
+  action="{% url 'crear_noticia'%}" method="post" 
+  enctype="multipart/form-data"
+>
+{% csrf_token%}
+  <h1 class="py-3 ps-3 fw-bold colorFont">Postea tu propia noticia!</h1>
+  <div class="w-50">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Titulo</label>
+      <input
+        type="text"
+        class="form-control"
+        id="tittle"
+        placeholder="Japón: Un acosador de porristas se rompió una pierna al intentar escapar"
+        maxlength="200"
+        name="titular"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Subtitulo</label>
+      <input
+        type="text"
+        class="form-control"
+        id="tittle"
+        placeholder="Japón: Un acosador de porristas se rompió una pierna al intentar escapar"
+        maxlength="200"
+        name="subtitulo"
+      />
+    </div>
+    <select
+      class="form-select"
+      id="category_idForm"
+      aria-label="Default select example"
+      name="categoria"
+    >
+      <option selected>Categorías</option>
+      <option value="Juegos">Juegos</option>
+      <option value="Anime">Anime</option>
+      <option value="Japón">Japón</option>
+    </select>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label"
+        >Cuerpo de la noticia:</label
+      >
+      <textarea
+        class="form-control"
+        id="body"
+        rows="8"
+        maxlength="4000"
+        name="cuerpo"
+      ></textarea>
+    </div>
+    <div class="m-3">
+      <label for="profileImg" class="fw-bold my-2"
+        >Imagen de portada: &nbsp;</label
+      >
+      <input type="file" name="portada_img" accept="image/*" />
+      <button type="submit" class="btn btn-dark" id="btnAddNews">
+        &nbsp;&nbsp;POSTEAR!&nbsp;&nbsp;
+      </button>
+    </div>
+  </div>
+</form>
+{%endblock contenido %}

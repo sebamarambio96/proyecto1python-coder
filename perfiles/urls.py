@@ -12,5 +12,5 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name="logout"),
     # PERFIL
     path('editar-mi-perfil/', MiPerfilUpdateView.as_view(), name="editar_perfil"),
-
+    path('agregar-avatar/', agregar_avatar, name="agregar_avatar")
 ]

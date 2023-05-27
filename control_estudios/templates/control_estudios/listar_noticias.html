@@ -1,0 +1,47 @@
+{% extends 'control_estudios/base.html' %} 
+{%block contenido %}
+<section class="m-3 backfillManager overflow-auto">
+  <div>
+    <h1>Mis Noticias</h1>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>ID</th>
+          <th>Titular</th>
+          <th>Autors</th>
+          <th>Categoria</th>
+          <th>Fecha</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        {% for noticia in object_list %}
+        {% if user.username == noticia.autor %}
+        <tr>
+          <td>{{noticia.id}}</td>
+          <td>{{noticia.titular}}</td>
+          <td>{{noticia.autor}}</td>
+          <td>{{noticia.categoria}}</td>
+          <td>{{noticia.fecha_publicacion}}</td>
+          <td><a href="{% url 'ver_noticia' noticia.id %}">Ver</a></td>
+          <td>
+            <a href="{% url 'editar_estudiante' noticia.id %}">Editar</a>
+          </td>
+          <td>
+            <form
+              {% comment %} action="{% url 'eliminar_estudiante' noticia.id %}" {% endcomment %}
+              method="post"
+            >
+              {% csrf_token%}
+              <input type="submit" value="Eliminar" />
+            </form>
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %} 
+      
+      </tbody>
+    </table>
+  </div>
+</section>
+{%endblock contenido %}
