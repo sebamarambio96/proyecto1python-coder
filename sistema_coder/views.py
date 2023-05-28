@@ -13,3 +13,10 @@ def inicio(request):
         context=contexto,
     )
     return http_response
+
+def sobre_mi(request):
+    http_response = render(
+        request=request,
+        template_name="control_estudios/sobre_mi.html"
+    )
+    return http_response
