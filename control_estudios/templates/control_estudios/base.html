@@ -28,28 +28,11 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
             </li>
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Categorías
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" id="1" value="Juegos">Juegos</a>
-                </li>
-                <li><a class="dropdown-item" id="2" value="Anime">Anime</a></li>
-                <li><a class="dropdown-item" id="3" value="Japón">Japón</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item">Todas</a></li>
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'listar_noticias' %}">Noticias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'listar_noticias' %}">Sobre mi</a>
             </li>
           </ul>
         </div>

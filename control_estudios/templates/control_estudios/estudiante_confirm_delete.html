@@ -1,8 +1,0 @@
-{% extends 'control_estudios/base.html' %} {%block contenido %}
-<form method="post" class="w-50 m-3 ">
-    {% csrf_token%}
-    {{ formulario.as_p }}
-    <h5>¿Estas seguro de que deseas eliminar este usuario?</h5>
-  <button type="submit" class="btn btn-danger">ENVIAR</button>
-</form>
-{%endblock contenido %}

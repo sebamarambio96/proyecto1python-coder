@@ -1,52 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from control_estudios.models import Estudiante, Curso, Entregable, Profesor, Noticias
-from django.contrib.auth.models import User
+from control_estudios.models import Noticias
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from control_estudios.forms import (
-    CursoFormulario,
-    ProfesorFormulario,
-    EstudianteFormulario,
-    EntregableFormulario,
-)
-
-
-def saludar_con_html(request):
-    contexto = {"usuario": "Seba"}
-    http_response = render(
-        request=request,
-        template_name="control_estudios/base.html",
-        context=contexto,
-    )
-    return http_response
-
-
-""" def listar_estudiantes(request):
-    contexto = {
-        "estudiantes": Estudiante.objects.all(),
-    }
-    http_response = render(
-        request=request,
-        template_name="control_estudios/listar_estudiantes.html",
-        context=contexto,
-    )
-    return http_response
- """
-
-def listar_cursos(request):
-    print (User)
-    contexto = {
-        "cursos": Curso.objects.all(),
-    }
-    http_response = render(
-        request=request,
-        template_name="control_estudios/listar_cursos.html",
-        context=contexto,
-    )
-    return http_response
-
+    
+#NOTICIAS
 @login_required
 def crear_noticia(request):
     if request.method == "POST":
@@ -59,7 +18,7 @@ def crear_noticia(request):
         autor = request.user
         noticias = Noticias(titular=titular, subtitulo=subtitulo, cuerpo=cuerpo, categoria=categoria, autor=autor, imagen=portada_img)
         noticias.save()
-        url_exitosa = reverse("inicio")
+        url_exitosa = reverse("mis_noticias")
         return redirect(url_exitosa)
     else:
         http_response = render(
@@ -67,202 +26,24 @@ def crear_noticia(request):
             template_name="control_estudios/formulario_noticia.html",
         )
         return http_response
-    
-def buscar_cursos(request):
-    if request.method == "POST":
-        data = request.POST
-        busqueda = data["busqueda"]
-        cursos = Curso.objects.filter(comision__contains=busqueda)
-        contexto = {"cursos": cursos}
-
-    http_response = render(
-        request=request,
-        template_name="control_estudios/listar_cursos.html",
-        context=contexto,
-    )
-    return http_response
 
 
-# FORMULARIOS
-
-
-def crear_cursos2(request):
-    if request.method == "POST":
-        formulario = CursoFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            nombre = data["nombre"]
-            comision = data["comision"]
-            curso = Curso(nombre=nombre, comision=comision)
-            curso.save()
-            url_exitosa = reverse("cursos")
-            return redirect(url_exitosa)
-        else:
-            formulario = CursoFormulario(request.POST)
-
-    else:
-        formulario = CursoFormulario()
-        http_response = render(
-            request=request,
-            template_name="control_estudios/formulario_curso2.html",
-            context={"formulario": formulario},
-        )
-        return http_response
-
-
-def eliminar_curso(request, id):
-    curso = Curso.objects.get(id=id)
-    if request.method == "POST":
-        curso.delete()
-        url_exitosa = reverse("cursos")
-        return redirect(url_exitosa)
-
-
-def editar_curso(request, id):
-    curso = Curso.objects.get(id=id)
-    if request.method == "POST":
-        formulario = CursoFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            curso.nombre = data["nombre"]
-            curso.comision = data["comision"]
-            curso.descripcion = data["descripcion"]
-            curso.save()
-            url_exitosa = reverse("cursos")
-        return redirect(url_exitosa)
-    else: 
-        inicial = {
-            "nombre": curso.nombre,
-            "comision": curso.comision,
-        }
-        formulario = CursoFormulario(initial=inicial)
-    return render(
-        request=request,
-        template_name="control_estudios/formulario_curso2.html",
-        context={"formulario": formulario},
-    )
-
-
-def crear_estudiante(request):
-    if request.method == "POST":
-        formulario = EstudianteFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            nombre = data["nombre"]
-            apellido = data["apellido"]
-            email = data["email"]
-            telefono = data["telefono"]
-            dni = data["dni"]
-            fecha_nacimiento = data["fecha_nacimiento"]
-            estudiante = Estudiante(
-                nombre=nombre,
-                apellido=apellido,
-                email=email,
-                telefono=telefono,
-                dni=dni,
-                fecha_nacimiento=fecha_nacimiento,
-            )
-            estudiante.save()
-            url_exitosa = reverse("estudiantes")
-            return redirect(url_exitosa)
-        else:
-            formulario = EstudianteFormulario(request.POST)
-
-    else:
-        formulario = EstudianteFormulario()
-        http_response = render(
-            request=request,
-            template_name="control_estudios/formulario_estudiantes.html",
-            context={"formulario": formulario},
-        )
-        return http_response
-
-
-def crear_profesor(request):
-    if request.method == "POST":
-        formulario = ProfesorFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            nombre = data["nombre"]
-            comision = data["comision"]
-            profesor = Profesor(nombre=nombre, comision=comision)
-            profesor.save()
-            url_exitosa = reverse("cursos")
-            return redirect(url_exitosa)
-        else:
-            formulario = ProfesorFormulario(request.POST)
-
-    else:
-        formulario = ProfesorFormulario()
-        http_response = render(
-            request=request,
-            template_name="control_estudios/formulario_profesor.html",
-            context={"formulario": formulario},
-        )
-        return http_response
-
-
-def crear_entregable(request):
-    if request.method == "POST":
-        formulario = EntregableFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            nombre = data["nombre"]
-            fecha_entrega = data["fecha_entrega"]
-            aprobado = data["aprobado"]
-            entregable = Entregable(
-                nombre=nombre, fecha_entrega=fecha_entrega, aprobado=aprobado
-            )
-            entregable.save()
-            url_exitosa = reverse("cursos")
-            return redirect(url_exitosa)
-        else:
-            formulario = EntregableFormulario(request.POST)
-
-    else:
-        formulario = EntregableFormulario()
-        http_response = render(
-            request=request,
-            template_name="control_estudios/formulario_entregables.html",
-            context={"formulario": formulario},
-        )
-        return http_response
-
-#Vistas de estudiantes
-
-class EstudianteListView(LoginRequiredMixin, ListView):
-    model = Estudiante
-    template_name= "control_estudios/listar_estudiantes.html"
-    
-class EstudianteDetailView(LoginRequiredMixin, DetailView):
-    model = Estudiante
-    """ success_url = reverse_lazy('listar_estudiantes') """
-    
-class EstudianteUpdateView(LoginRequiredMixin, UpdateView):
-    model = Estudiante
-    fields = ('apellido', 'nombre', 'email', 'dni')
-    success_url = reverse_lazy('listar_estudiantes')
-    
-class EstudianteDeleteView(LoginRequiredMixin, DeleteView):
-    model = Estudiante
-    success_url = reverse_lazy('listar_estudiantes')
-    
-class EstudianteCreateView(LoginRequiredMixin, CreateView):
-    model = Estudiante
-    fields = ('apellido', 'nombre', 'email', 'dni', 'fecha_nacimiento')
-    success_url = reverse_lazy('listar_estudiantes')
-    
-#NOTICIAS
-
-class NoticiasDetailView(LoginRequiredMixin, DetailView):
+class NoticiasDetailView(DetailView):
     model = Noticias
-    """ success_url = reverse_lazy('listar_estudiantes') """
     
-class NoticiasListView(LoginRequiredMixin, ListView):
+class MisNoticiasListView(LoginRequiredMixin, ListView):
+    model = Noticias
+    template_name= "control_estudios/mis_noticias.html"
+
+class NoticiasListView(ListView):
     model = Noticias
     template_name= "control_estudios/listar_noticias.html"
+    
+class NoticiasUpdateView(LoginRequiredMixin, UpdateView):
+    model = Noticias
+    fields = ('titular', 'subtitulo', 'categoria', 'cuerpo', 'imagen')
+    success_url = reverse_lazy('mis_noticias')   
+    
+class NoticiasDeleteView(LoginRequiredMixin, DeleteView):
+    model = Noticias
+    success_url = reverse_lazy('mis_noticias')

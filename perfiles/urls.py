@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 
 from perfiles.views import registro, login_view, CustomLogoutView, MiPerfilUpdateView,\
@@ -7,10 +6,10 @@ from perfiles.views import registro, login_view, CustomLogoutView, MiPerfilUpdat
 
 urlpatterns = [
     # USUARIO
-    path('registro/', registro, name="registro"),
+    path('signup/', registro, name="registro"),
     path('login/', login_view, name="login"),
     path('logout/', CustomLogoutView.as_view(), name="logout"),
     # PERFIL
-    path('editar-mi-perfil/', MiPerfilUpdateView.as_view(), name="editar_perfil"),
+    path('profile/', MiPerfilUpdateView.as_view(), name="editar_perfil"),
     path('agregar-avatar/', agregar_avatar, name="agregar_avatar")
 ]
