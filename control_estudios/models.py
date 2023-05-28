@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 class Noticias(models.Model):
     titular = models.CharField(max_length=150)
@@ -8,7 +8,7 @@ class Noticias(models.Model):
     cuerpo = models.CharField(max_length=4000)
     categoria = models.CharField(max_length=30)
     imagen = models.ImageField(upload_to="noticias", null=True, blank=True)
-    fecha_publicacion = models.DateField(default=datetime.now())
+    fecha_publicacion = models.DateField(default=timezone.now)
 
     def __str__(self):
         return f"{self.titular} | {self.autor}"

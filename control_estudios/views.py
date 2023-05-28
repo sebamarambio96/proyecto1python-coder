@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def crear_noticia(request):
     if request.method == "POST":
         data = request.POST
+        print(data)
         titular = data["titular"]
         subtitulo = data["subtitulo"]
         cuerpo = data["cuerpo"]
@@ -47,3 +48,5 @@ class NoticiasUpdateView(LoginRequiredMixin, UpdateView):
 class NoticiasDeleteView(LoginRequiredMixin, DeleteView):
     model = Noticias
     success_url = reverse_lazy('mis_noticias')
+    
+    

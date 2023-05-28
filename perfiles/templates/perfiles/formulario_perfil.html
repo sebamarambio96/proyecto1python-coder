@@ -1,12 +1,8 @@
-{% extends "control_estudios/base.html" %}
-
-{% block contenido %}
-<p>Tu username es <b>{{ object.username }}</b></p>
-
-<h3>Editar datos:</h3>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Salvar"/>
+{% extends "control_estudios/base.html" %} {% block contenido %}
+<form method="post" class="backfillManager m-5">
+  <p>Tu username es <b>{{ object.username }}</b></p>
+  <h3>Editar datos:</h3>
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="Salvar" />
 </form>
 {% endblock contenido %}

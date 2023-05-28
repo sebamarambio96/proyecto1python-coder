@@ -3,6 +3,10 @@
 SuperUsuario: admin
 pass: admin123
 
+## Instalar dependencias
+
+pip install -r requirements.txt
+
 ## Iniciar entorno virtual
 
 entorno-virtual\Scripts\activate 
@@ -11,12 +15,21 @@ entorno-virtual\Scripts\activate
 
 python manage.py runserver   
 
-## Descripción general
+## Test
 
-Para facilitar la revisión he dispuesto en el nav todos los formularios solicitados los cuales se renderizan
-automaticamente para mostrar los inputs requeridos.
+Se escribio un test que revisa que las noticias se agreguen correctamente a la base de datos:
 
-Pára verificar el ingreso de los datos a la bbdd debe ir a listar estudiantes o cursos, o tambien puede entrar en:
+python manage.py test
+
+## Detalles
+
+Reemplacé el boton "Leer más" por un link asociado al título de la noticia por fines meramente estéticos.
+
+Pára verificar el ingreso de los datos a la bbdd debe ir a listar noticias y usuarios, o tambien puede entrar en:
 # http://localhost:8000/admin/
 
 Utilice las credenciales indicadas al inicio del documento
+
+## Link Video 
+
+https://www.loom.com/share/f5f0f3105d68490a855146caa44ec566

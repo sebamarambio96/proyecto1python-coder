@@ -67,45 +67,6 @@ a:active {
     border-color: #5d1c58;
 }
 
-
-.botonCarrito {
-    background-color: rgba(150, 92, 11, 0.705);
-    color: white;
-}
-
-.botonCarrito:hover {
-    background-color: rgb(175, 108, 15);
-    color: white;
-}
-
-.botonIngresa {
-    background-color: rgb(204, 123, 30);
-    color: white;
-    margin-top: 10px;
-}
-
-.botonIngresa:hover {
-    background-color: rgb(177, 107, 26);
-    color: white;
-}
-
-.botonRegistro {
-    background-color: rgba(196, 48, 129, 0.925);
-    color: white;
-    margin-top: 10px;
-    border-color: rgba(168, 25, 125, 0.925);
-}
-
-.botonRegistro:hover {
-    background-color: rgb(145, 20, 107);
-    color: white;
-    border-color: rgb(145, 20, 107);
-}
-
-.btn:focus {
-    box-shadow: 0 0 0 0.25rem rgba(150, 92, 11, 0.705);
-}
-
 .btnProducto {
     padding: 0.2rem 0.35rem;
 }
@@ -481,12 +442,6 @@ li {
     background: linear-gradient(165deg, rgba(150, 92, 11, 0.8046568969384629) 0%, rgba(192, 0, 255, 0.7122199221485469) 100%);
     color: white;
 }
-
-/* -----------------------------------db Manager------------------------------------- */
-/* .btnManager {
-    padding-left: 20px;
-    padding-right: 20px;
-} */
 
 .backfillManager {
     height: 82vh;
