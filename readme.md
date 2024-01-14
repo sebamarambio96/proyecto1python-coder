@@ -1,5 +1,11 @@
 ## Apuntes Django
 
+## Link Video 
+Video en el cual se detallan las funcionalidades del proyecto:
+
+https://www.loom.com/share/f5f0f3105d68490a855146caa44ec566
+
+--------------------
 SuperUsuario: admin
 pass: admin123
 
@@ -29,7 +35,3 @@ Pára verificar el ingreso de los datos a la bbdd debe ir a listar noticias y us
 # http://localhost:8000/admin/
 
 Utilice las credenciales indicadas al inicio del documento
-
-## Link Video 
-
-https://www.loom.com/share/f5f0f3105d68490a855146caa44ec566
